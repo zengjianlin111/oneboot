@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.StuDao">
+    <!--开启二级缓存并修改默认的二级缓存-->
+    <cache type="com.baizhi.redis.RedisUtil"></cache>
+    <!--查询所有用户-->
+    <select id="selectall" resultType="Stu">
+        select * from stu2
+    </select>
+</mapper>

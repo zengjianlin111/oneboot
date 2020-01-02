@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+    <!--开启二级缓存并修改默认的二级缓存-->
+    <cache type="com.baizhi.redis.RedisUtil"></cache>
+
+    <!--查询所有用户-->
+    <select id="selectAll" resultType="User">
+      select * from user
+    </select>
+
+    <!--查询所有用户-->
+    <select id="selectUsers" resultType="User">
+      select * from user limit #{qishi},#{count}
+    </select>
+
+    <!--查询总条数-->
+    <select id="selectcount" resultType="int">
+      select count(id) from user
+    </select>
+
+    <!--删除通过id删除-->
+    <delete id="delete">
+        delete from user where id=#{id}
+    </delete>
+
+    <!--添加-->
+    <insert id="insert">
+        insert user values(0,#{name},#{password},#{birthday},#{cellphone},#{state})
+    </insert>
+
+    <!--通过id查用户-->
+    <select id="selectid" resultType="User">
+        select * from user where id=#{id}
+    </select>
+
+
+    <!--模糊查询 动态sql-->
+    <select id="likeUser" resultType="User">
+        select * from user
+        <where>
+            <if test="name!=null">
+              and name like concat('%',#{name},'%')
+            </if>
+            <if test="cellphone!=null">
+              and cellphone like concat('%',#{cellphone},'%')
+            </if>
+            <if test="state!=null">
+              and  state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--修改-->
+    <update id="update">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="name!=null">
+                password=#{password},
+            </if>
+            <if test="name!=null">
+                birthday=#{birthday},
+            </if>
+            <if test="name!=null">
+                cellphone=#{cellphone},
+            </if>
+            <if test="name!=null">
+                state=#{state}
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+</mapper>

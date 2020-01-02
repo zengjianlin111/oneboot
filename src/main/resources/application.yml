@@ -1,0 +1,43 @@
+server:
+  port: 8989
+  servlet:
+    jsp:
+      init-parameters:
+        development:  true      #development 固定 true开启热部署
+spring:
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.1.167:9300
+  redis:
+    port: 7000   #redis可用主节点之一的端口
+    host: 192.168.1.203   #redis主机ip
+    database: 0   #使用的数据库  集群环境下只能使用0号库
+  datasource:
+    username: root
+    #用户密码
+    password: root        #用户密码
+    type: com.alibaba.druid.pool.DruidDataSource #数据源
+    driver-class-name: com.mysql.jdbc.Driver   #驱动
+    url: jdbc:mysql://127.0.0.1:3306/d2    #url
+  mvc:              #配置视图解析器
+    view:
+      prefix: /          #前缀
+      suffix: .jsp
+  http:
+    encoding:
+      charset: utf-8    #设置编码格式
+      force: true       #是否强制执行
+      force-request: true #强制使用请求编码为utf-8
+      force-response: true #强制使用响应编码为utf-8
+mybatis:
+  mapper-locations: classpath:mapper/*.xml    #配置xml文件位置
+  type-aliases-package: com.baizhi.entity     #配置实体类位置
+logging:
+  level:
+    root: info      #根日志
+    com.baizhi.dao: debug  #子日志(会显示sql语句)
+  file: D:/test.log   #指定日志输出位置 文件夹 + 文件名 也可以使用path指定目录自动生成配置文件 但是不建议两个一起使用
+  pattern:
+    console: '[%p] %d{yyyy-MM-dd hh-mm-ss} %m %n' #指定向控制台输出的格式
+    file: '[%p] %d{yyyy-MM-dd hh-mm-ss} %m %n'  #指定向文件中输出的格式
+
